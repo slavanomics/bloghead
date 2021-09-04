@@ -25,7 +25,7 @@
     <h3>Setup your bloghead instance.</h3>
 </div>
 {% for message in get_flashed_messages() %}
-<p>{{ message }}</p>
+<div class="alert alert-danger" role="alert">{{ message }}</div>
 {% endfor %}
 {% if form.errors %}
         {% for field_name, field_errors in form.errors|dictsort if field_errors %}
