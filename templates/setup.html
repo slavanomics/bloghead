@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloghead | Setup </title>
+</head>
+<body>
+    {% if form.name.errors %}
+    <ul class="errors">
+    {% for error in form.name %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+    <form method="POST" action="/setup/">
+        {{ form.csrf_token }}
+        {{ form.name.label }} {{ form.name(size=20) }}
+        <input type="submit" value="Go">
+    </form>
+</body>
+</html>
