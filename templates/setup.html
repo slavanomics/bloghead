@@ -4,20 +4,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <style>
+        #container {
+            width: 60%;
+            margin: 0 auto;
+        }
+        #head {
+            margin: 5%;
+            text-align: center;
+            padding-bottom: 3%;
+        }
+    </style>
     <title>Bloghead | Setup </title>
 </head>
 <body>
-    {% if form.name.errors %}
-    <ul class="errors">
-    {% for error in form.name %}
-        <li>{{ error }}</li>
-    {% endfor %}
-    </ul>
+    <div id="container">
+        <div id="head">
+    <h1>Setup</h1>
+    <h3>Setup your bloghead instance.</h3>
+</div>
+{% for message in get_flashed_messages() %}
+<p>{{ message }}</p>
+{% endfor %}
+{% if form.errors %}
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+            <div class="alert alert-danger" role="alert">{{ form[field_name].label }}: {{ error }}</div>
+            {% endfor %}
+        {% endfor %}
 {% endif %}
-    <form method="POST" action="/setup/">
+<div class="form">
+
+    
+    <form method="POST" action="/setup">
+        <legend>Database</legend>
+        <div class="mb-3">
+            
         {{ form.csrf_token }}
-        {{ form.name.label }} {{ form.name(size=20) }}
-        <input type="submit" value="Go">
+        {{ form.dbuser.label(class_="form-label") }} {{ form.dbuser(size=20,class_="form-control") }}
+        
+    </div>
+    <div class="mb-3">
+        {{ form.dbpass.label(class_="form-label") }} {{ form.dbpass(class_="form-control") }}
+        <div class="form-text">The password used to access your database, not your user account.</div>
+    </div>
+    <div class="mb-3">
+        {{ form.dbhost.label(class_="form-label") }} {{ form.dbhost(class_="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.dbport.label(class_="form-label") }} {{ form.dbport(class_="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.dbname.label(class_="form-label") }} {{ form.dbname(class_="form-control") }}
+    </div>
+    <legend>Admin Account</legend>
+    <div class="mb-3">
+        {{ form.username.label(class_="form-label") }} {{ form.username(class_="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.password.label(class_="form-label") }} {{ form.password(class_="form-control") }}
+        <div class="form-text">The password used to access your user account.</div>
+    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <footer class="footer mt-auto py-3 bg-light">
+        <span class="text-muted">Powered by <a href="https://github.com/slavanomics/bloghead">bloghead</a></span>
+    </footer>
+</div>
+</div>
 </body>
 </html>
