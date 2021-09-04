@@ -1,4 +1,4 @@
-# Bloghead
+# bloghead
 
 ### What is this?
 bloghead is a simple flask-based blogging platform
