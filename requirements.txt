@@ -1,0 +1,6 @@
+Flask
+cryptography
+sqlalchemy
+flask_login
+flask_wtf
+wtforms
