@@ -5,6 +5,7 @@ bloghead is a simple flask-based blogging platform
 
 ### Todo
 
+- [ ] setup
 - [ ] auth
 - [ ] 2fa
 - [ ] sql support
