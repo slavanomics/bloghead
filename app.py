@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, flash
+from flask.helpers import url_for
 from flask_login import login_required, current_user
-from flask_sqlalchemy import SQLAlchemy
+
+from models import db, User
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField,IntegerField
@@ -14,8 +16,8 @@ app.config['SECRET_KEY'] = urandom(32)
 if path.exists('setup.ini'):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
-db = SQLAlchemy(app)
-class SetupForm(FlaskForm):
+db.init_app(app)
+class SetupForm(FlaskForm): #TODO move this form and make other forms in forms.py
     dbuser = StringField('User', validators=[DataRequired()])
     dbpass = PasswordField('Password', validators=[DataRequired()])
     dbhost = StringField('Host', validators=[DataRequired()])
@@ -40,10 +42,11 @@ def setup():
             # construct sqlalchemy uri
             app.config['SQLALCHEMY_DATABASE_URI'] = f'mariadb+mariadbconnector://{form.dbuser.data}:{form.dbpass.data}@{form.dbhost.data}:{form.dbport.data}/{form.dbname.data}' # TODO@slavanomics add select in form and make this work with engines other than mariadb.
             db.create_all()
+            
         except Exception as e:
             flash(str(e))
             return render_template('setup.html',form=form)
-        return "t"
+        return redirect(url_for('success'))
     # do setup logic
     return render_template('setup.html',form=form)
 
