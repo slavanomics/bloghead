@@ -5,3 +5,4 @@ flask_login
 flask_wtf
 wtforms
 mariadb
+argon2-cffi
