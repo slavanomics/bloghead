@@ -40,7 +40,7 @@ toolbar = DebugToolbarExtension(app)
 @is_setup
 def index():
     return 'hi'
-    
+
 @app.route('/setup',methods=['GET','POST'])
 def setup():
     form = SetupForm()
@@ -59,7 +59,7 @@ def setup():
         except Exception as e:
             flash(str(e))
             return render_template('setup.html',form=form)
-        return redirect(url_for('success'))
+        return render_template('success.html')
     # do setup logic
     return render_template('setup.html',form=form)
 
