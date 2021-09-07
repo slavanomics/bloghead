@@ -54,7 +54,7 @@ def setup():
             db.create_all()
             # generate config once database table generation went successfully
             # for now im going to just make this store the uri from above, once i implement sources other than MariaDB i will change the way the config file is structured.
-            config['Database'] = {'DB_URI': 'uri'}
+            config['Database'] = {'DB_URI': uri}
             with open('config.ini','w') as configfile:
                 config.write(configfile)
         except Exception as e:
