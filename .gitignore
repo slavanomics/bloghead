@@ -196,3 +196,4 @@ cython_debug/
 
 # config file
 config.ini
+.vscode/settings.json
