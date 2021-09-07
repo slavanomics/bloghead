@@ -22,6 +22,7 @@ app.debug = True
 app.config['SECRET_KEY'] = urandom(32)
 
 if path.exists('config.ini'):
+    config.read('config.ini')
     app.config['SQLALCHEMY_DATABASE_URI'] = config.get('Database','DB_URI') #kill me tbh 
 
 db.init_app(app)
