@@ -14,8 +14,10 @@ from wtforms import StringField, PasswordField,IntegerField
 from wtforms.validators import DataRequired, NumberRange
 from util import is_setup
 from os import urandom, path
+import argon2
 import configparser
 
+ph = argon2.PasswordHasher()
 config = configparser.ConfigParser()
 app = Flask(__name__)
 app.debug = True
@@ -57,6 +59,11 @@ def setup():
             config['Database'] = {'DB_URI': uri}
             with open('config.ini','w') as configfile:
                 config.write(configfile)
+            # only store user in database after config file saves successfully in case of permission issues. (maybe check for these pre-setup?)
+            hash = ph.hash(form.password.data)
+            admin = User(id=0)
+            db.session.add(admin)
+            db.session.commit()
         except Exception as e:
             flash(str(e))
             return render_template('setup.html',form=form)
